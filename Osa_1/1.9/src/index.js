@@ -19,9 +19,18 @@ const Statistics = (props) => {
     const neutral = stats.counterNeutral
     const bad = stats.counterBad
     const sum = good+bad+neutral
-    const average = (sum!==0? ((good - bad)/sum) : 0).toFixed(1)
-    const positive = (sum!==0? ((good*100)/sum) : 0).toFixed(1) + " %"
+   
+    
+    if (sum === 0) {
+        return (
+          <div>
+            <p>ei yhtään palautetta annettu</p>
+          </div>
+        )
+    }
 
+    const average = ((good - bad)/sum).toFixed(1)
+    const positive = ((good*100)/sum).toFixed(1) + " %"
     return (
         <div>
             <h1>statistiikka</h1>
