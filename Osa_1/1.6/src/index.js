@@ -6,7 +6,7 @@ const MyButton = ({ handleClick, text }) => (
 )
 const MyStatistics = ({ good, neutral,bad }) => (
     <div>
-        <h1>statistiiikka</h1>
+        <h1>statistiikka</h1>
         <dl>
             <dt>hyvä {good}</dt>
             <dt>neuraali {neutral}</dt>
