@@ -8,8 +8,8 @@ const MyButton = ({ handleClick, text }) => (
 const MyStatistics = (props) => {
     const { good, neutral, bad } = props
     const sum = good+bad+neutral
-    const average = sum!=0? ((good - bad)/sum) : 0
-    const positive = sum!=0? ((good*100)/sum) : 0
+    const average = sum!==0? ((good - bad)/sum) : 0
+    const positive = sum!==0? ((good*100)/sum) : 0
 
     return (
         <div>
