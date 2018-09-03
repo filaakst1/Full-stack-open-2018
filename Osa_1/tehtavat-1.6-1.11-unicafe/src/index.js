@@ -4,11 +4,9 @@ import ReactDOM from 'react-dom'
 const Button = ({ handleClick, text }) => (
     <button onClick={handleClick}>{text}</button>
 )
-const Statistic = (props) => {
-    console.log(props)
-    const { name, value } = props
+const Statistic = ({name, value}) => {
     return (
-        <dt>{name} {value}</dt>
+        <tr><td>{name}</td><td>{value}</td></tr>
     )
 }
 const Statistics = (props) => {
@@ -34,12 +32,17 @@ const Statistics = (props) => {
     return (
         <div>
             <h1>statistiikka</h1>
+            <table>
+                <tbody>
+                    <Statistic name="hyvä" value={good} />
+                    <Statistic name="neutraali" value={neutral} />
+                    <Statistic name="huono" value={bad} />
+                    <Statistic name="keskiarvo" value={average} />
+                    <Statistic name="positiivisia" value={positive} />
+                </tbody>
+            </table>
             <dl>
-                <Statistic name="hyvä" value={good} />
-                <Statistic name="neutraali" value={neutral} />
-                <Statistic name="huono" value={bad} />
-                <Statistic name="keskiarvo" value={average} />
-                <Statistic name="positiivisia" value={positive} />
+                
             </dl>
         </div>
     )
