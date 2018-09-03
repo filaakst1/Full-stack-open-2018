@@ -5,14 +5,12 @@ const Button = ({ handleClick, text }) => (
     <button onClick={handleClick}>{text}</button>
 )
 const Statistic = (props) => {
-    console.log(props)
     const { name, value } = props
     return (
         <dt>{name} {value}</dt>
     )
 }
 const Statistics = (props) => {
-    console.log(props)
     const { stats } = props
 
     const good = stats.counterGood
@@ -24,8 +22,8 @@ const Statistics = (props) => {
     if (sum === 0) {
         return (
           <div>
-			<h1>statistiikka</h1>
-			<p>ei yhtään palautetta annettu</p>
+            <h1>statistiikka</h1>
+            <p>ei yhtään palautetta annettu</p>
           </div>
         )
     }
@@ -37,7 +35,7 @@ const Statistics = (props) => {
             <h1>statistiikka</h1>
             <dl>
                 <Statistic name="hyvä" value={good} />
-                <Statistic name="neuraali" value={neutral} />
+                <Statistic name="neutraali" value={neutral} />
                 <Statistic name="huono" value={bad} />
                 <Statistic name="keskiarvo" value={average} />
                 <Statistic name="positiivisia" value={positive} />
