@@ -1,25 +1,36 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const MyButton = ({ handleClick, text }) => (
+const Button = ({ handleClick, text }) => (
     <button onClick={handleClick}>{text}</button>
 )
+const Statistic = (props) => {
+    console.log(props)
+    const { name, value } = props
+    return (
+        <dt>{name} {value}</dt>
+    )
+}
+const Statistics = (props) => {
+    console.log(props)
+    const { stats } = props
 
-const MyStatistics = (props) => {
-    const { good, neutral, bad } = props
+    const good = stats.counterGood
+    const neutral = stats.counterNeutral
+    const bad = stats.counterBad
     const sum = good+bad+neutral
-    const average = sum!==0? ((good - bad)/sum) : 0
-    const positive = sum!==0? ((good*100)/sum) : 0
+    const average = (sum!==0? ((good - bad)/sum) : 0).toFixed(1)
+    const positive = (sum!==0? ((good*100)/sum) : 0).toFixed(1) + " %"
 
     return (
         <div>
             <h1>statistiikka</h1>
             <dl>
-                <dt>hyvä {good}</dt>
-                <dt>neuraali {neutral}</dt>
-                <dt>huono {bad}</dt>
-                <dt>keskiarvo {average.toFixed(1)}</dt>
-                <dt>positiivisia {positive.toFixed(1)} %</dt>
+                <Statistic name="hyvä" value={good} />
+                <Statistic name="neuraali" value={neutral} />
+                <Statistic name="huono" value={bad} />
+                <Statistic name="keskiarvo" value={average} />
+                <Statistic name="positiivisia" value={positive} />
             </dl>
         </div>
     )
@@ -57,11 +68,11 @@ class App extends React.Component {
         <div>
         <h1>anna palautetta</h1>
         <div>
-            <MyButton handleClick={this.incrementGood} text="hyvä" />
-            <MyButton handleClick={this.incrementNeutral} text="neutraali" />
-            <MyButton handleClick={this.incrementBad} text="huono" />
+            <Button handleClick={this.incrementGood} text="hyvä" />
+            <Button handleClick={this.incrementNeutral} text="neutraali" />
+            <Button handleClick={this.incrementBad} text="huono" />
         </div>
-        <MyStatistics good={this.state.counterGood} neutral={this.state.counterNeutral} bad={this.state.counterBad} />
+        <Statistics stats={this.state}  />
         
       </div>
     )
