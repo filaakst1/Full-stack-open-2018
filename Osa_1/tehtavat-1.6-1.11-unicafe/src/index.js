@@ -5,6 +5,7 @@ const Button = ({ handleClick, text }) => (
     <button onClick={handleClick}>{text}</button>
 )
 const Statistic = (props) => {
+    console.log(props)
     const { name, value } = props
     return (
         <dt>{name} {value}</dt>
@@ -53,32 +54,25 @@ class App extends React.Component {
         counterBad: 0
       }
     }
-    incrementGood = () => {
-        this.setState({
-            counterGood: this.state.counterGood + 1
-        })
-      }
-    
-    incrementNeutral = () => {
-        this.setState({
-            counterNeutral: this.state.counterNeutral + 1
-        })
-    }
 
-    incrementBad = () => {
-        this.setState({
-            counterBad: this.state.counterBad + 1
+    incrementCounter = (value) => {
+        return () =>  this.setState({
+            [value]: this.state[value]+ 1
         })
+        
+        
     }
-  
+    
     render() {
         return (
         <div>
         <h1>anna palautetta</h1>
         <div>
-            <Button handleClick={this.incrementGood} text="hyvä" />
-            <Button handleClick={this.incrementNeutral} text="neutraali" />
-            <Button handleClick={this.incrementBad} text="huono" />
+            <Button handleClick={this.incrementCounter('counterGood')} text="hyvä" />
+            <Button handleClick={this.incrementCounter('counterNeutral')} text="neuraali" />
+            <Button handleClick={this.incrementCounter('counterBad')} text="huono" />
+
+            
         </div>
         <Statistics stats={this.state}  />
         
