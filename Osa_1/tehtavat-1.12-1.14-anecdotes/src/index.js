@@ -1,6 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+const Button = ({ handleClick, text }) => (
+    <button onClick={handleClick}>{text}</button>
+)
+
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -8,11 +12,21 @@ class App extends React.Component {
       selected: 0
     }
   }
+  nextAnecdote = (anecdotes) => {
+    let nextIndex = this.state.selected;
+    while(this.state.selected ===nextIndex ) {
+      nextIndex = Math.floor(Math.random() * anecdotes.length);
+    }
 
+    return () =>  this.setState({
+        selected: nextIndex
+    })
+  }
   render() {
     return (
       <div>
-        {this.props.anecdotes[this.state.selected]}
+        <p>{this.props.anecdotes[this.state.selected]}</p>
+        <Button handleClick={this.nextAnecdote(this.props.anecdotes)} text="next anecdote" />
       </div>
     )
   }
