@@ -12,7 +12,23 @@ const AnecdoteDisplay = ({anecdote, points}) => {
     </div>
   )
 }
-
+const BestAnecdoteDisplay = ({maxIndex,points, anecdotes}) => {
+  const maxVotes = Math.max(...points)
+  if(maxVotes === 0 ) {
+    return (
+      <div>
+        <h2>anecdote with most votes:</h2>
+        <p>no votes given</p>
+      </div>
+    )
+  }
+  return (
+    <div>
+      <h2>anecdote with most votes:</h2>
+      <AnecdoteDisplay anecdote={anecdotes[maxIndex]} points={points[maxIndex]} />
+    </div>
+  )
+}
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -45,6 +61,12 @@ class App extends React.Component {
         points: copyOfPoints
     })
   }
+  bestAnecdote = () => {
+    const copyOfPoints = [...this.state.points]
+    const maxVotes = Math.max(...copyOfPoints)
+    const maxIndex = copyOfPoints.indexOf(maxVotes);
+    return maxIndex
+  }
   render() {
     return (
       <div>
@@ -53,6 +75,7 @@ class App extends React.Component {
           <Button handleClick={this.vote()} text="vote" />
           <Button handleClick={this.nextAnecdote(this.props.anecdotes)} text="next anecdote" />
         </div>
+        <BestAnecdoteDisplay maxIndex={this.bestAnecdote()} points={this.state.points} anecdotes={this.props.anecdotes} />
       </div>
     )
   }
