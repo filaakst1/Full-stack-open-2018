@@ -58,7 +58,7 @@ const App = () => {
       }
       return (
         <div>
-          <Kurssi kurssi={kurssi} />
+            <Kurssi kurssi={kurssi} />
         </div>
       )
 }
