@@ -1,63 +1,62 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const Otsikko = (props) => {
+const Otsikko = ({kurssi}) => {
     return (
-        <h1>{props.kurssi.nimi}</h1>
+        <h1>{kurssi.nimi}</h1>
     )
 }
-const Osa = (props) => {
+const Osa = ({osa}) => {
     return (
         <div>
-            <p>{props.osa.nimi} {props.osa.tehtavia}</p>
+            <p>{osa.nimi} {osa.tehtavia}</p>
         </div>
     )
 
 }
-const Sisalto = (props) => {
+const Sisalto = ({kurssi}) => {
+    const rivit = () => kurssi.osat.map(osa => <Osa key={osa.id} osa={osa} />)
+
     return(
         <div>
-            <Osa osa={props.kurssi.osat[0]} />
-            <Osa osa={props.kurssi.osat[1]} />
-            <Osa osa={props.kurssi.osat[2]} />
+            {rivit()}
         </div>
     )
 }
-const Yhteensa = (props) => {
-    return (
-        <p>yhteensä {props.kurssi.osat[0].tehtavia + props.kurssi.osat[1].tehtavia +props.kurssi.osat[2].tehtavia} tehtävää</p>
-    )
-}
+
 const Kurssi = ({ kurssi }) => (
     <div>
         <Otsikko kurssi={kurssi} />
         <Sisalto kurssi={kurssi} />
-        <Yhteensa kurssi={kurssi} />
     </div>
 )
 const App = () => {
+
     const kurssi = {
         nimi: 'Half Stack -sovelluskehitys',
         osat: [
           {
-              nimi: 'Reactin perusteet',
-              tehtavia: 10
+            nimi: 'Reactin perusteet',
+            tehtavia: 10,
+            id: 1
           },
           {
-              nimi: 'Tiedonvälitys propseilla',
-              tehtavia: 7
+            nimi: 'Tiedonvälitys propseilla',
+            tehtavia: 7,
+            id: 2
           },
           {
-              nimi: 'Komponenttien tila',
-              tehtavia: 14
+            nimi: 'Komponenttien tila',
+            tehtavia: 14,
+            id: 3
           }
         ]
-    }
-    return (
+      }
+      return (
         <div>
-            <Kurssi kurssi={kurssi} />
+          <Kurssi kurssi={kurssi} />
         </div>
-    )
+      )
 }
 
 ReactDOM.render(
