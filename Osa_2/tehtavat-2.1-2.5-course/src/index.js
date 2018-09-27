@@ -15,17 +15,15 @@ const Osa = ({osa}) => {
 
 }
 const Sisalto = ({kurssi}) => {
-    const rivit = () => kurssi.osat.map(osa => <Osa key={osa.id} osa={osa} />)
-
     return(
         <div>
-            {rivit()}
+            {kurssi.osat.map(osa => <Osa key={osa.id} osa={osa} />)}
         </div>
     )
 }
 const Yhteensa = ({kurssi}) => {
     return (
-        <p>yhteensä {kurssi.osat[0].tehtavia + kurssi.osat[1].tehtavia +kurssi.osat[2].tehtavia} tehtävää</p>
+        <p>yhteensä {kurssi.osat.reduce((sum, osa) => sum + osa.tehtavia,0)} tehtävää</p>
     )
 }
 const Kurssi = ({ kurssi }) => (
