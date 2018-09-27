@@ -23,13 +23,19 @@ const Sisalto = ({kurssi}) => {
         </div>
     )
 }
-
+const Yhteensa = ({kurssi}) => {
+    return (
+        <p>yhteensä {kurssi.osat[0].tehtavia + kurssi.osat[1].tehtavia +kurssi.osat[2].tehtavia} tehtävää</p>
+    )
+}
 const Kurssi = ({ kurssi }) => (
     <div>
         <Otsikko kurssi={kurssi} />
         <Sisalto kurssi={kurssi} />
+        <Yhteensa kurssi={kurssi} />
     </div>
 )
+
 const App = () => {
 
     const kurssi = {
