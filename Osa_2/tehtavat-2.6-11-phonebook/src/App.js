@@ -5,9 +5,12 @@ class App extends React.Component {
     super(props)
     this.state = {
       persons: [
-        { name: 'Arto Hellas' }
+        { name: 'Arto Hellas',
+          number: '040-123456'
+        }
       ],
-      newName: ''
+      newName: '',
+      newNumber: ''
     }
   }
 
@@ -18,6 +21,7 @@ class App extends React.Component {
 
     const personObject = {
         name: this.state.newName,
+        number: this.state.newNumber
     }
     const searchIndex = this.state.persons.map(person=> person.name).indexOf(personObject.name)
     if(searchIndex === -1) {
@@ -32,12 +36,18 @@ class App extends React.Component {
       console.log(personObject + ' exists at index ' +searchIndex)
     } 
   }
-  /* Event handler for input field changes */
+  
+/* Event handler for input field changes */
   handleContactChange = (event) => {
-    console.log('Change event: ' + event.target.value)
+    console.log('Name change event: ' + event.target.value)
     this.setState({ newName: event.target.value })
   }
 
+  /* Event handler for input field changes */
+  handleNumberChange = (event) => {
+    console.log('Number change event: ' + event.target.value)
+    this.setState({ newNumber: event.target.value })
+  }
   render() {
     return (
       <div>
@@ -47,11 +57,20 @@ class App extends React.Component {
             nimi: <input value={this.state.newName} onChange={this.handleContactChange}/>
           </div>
           <div>
+            numero: <input value={this.state.newNumber} onChange={this.handleNumberChange}/>
+          </div>
+          <div>
             <button type="submit">lisää</button>
           </div>
+          
         </form>
         <h2>Numerot</h2>
-            {this.state.persons.map(person=> <li key={person.name}>{person.name}</li>)}
+          <table>
+            <tbody>
+              {this.state.persons.map(person=><tr key={person.name}><td>{person.name}</td><td>{person.number}</td></tr>)}
+            </tbody>
+          </table>
+        
       </div>
     )
   }
