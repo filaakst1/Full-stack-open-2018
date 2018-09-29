@@ -1,4 +1,6 @@
 import React from 'react';
+import DataFilter from './components/DataFilter'
+import ContactForm from './components/ContactForm'
 
 class App extends React.Component {
   constructor(props) {
@@ -64,28 +66,18 @@ class App extends React.Component {
 
   }
 
-  
-  
   render() {
     return (
       <div>
-
         <h2>Puhelinluettelo</h2>
-        <div>
-            rajaa näytettäviä: <input value={this.state.filter} onChange={this.handleFilterChange} />
-        </div>
-        <form  onSubmit={this.addContact}>
-          <div>
-            nimi: <input value={this.state.newName} onChange={this.handleContactChange}/>
-          </div>
-          <div>
-            numero: <input value={this.state.newNumber} onChange={this.handleNumberChange}/>
-          </div>
-          <div>
-            <button type="submit">lisää</button>
-          </div>
-          
-        </form>
+        <DataFilter value={this.state.filter} 
+                    onChangeFunction={(e)=> this.handleFilterChange(e)} />
+        <ContactForm  onSubmit={(e)=> this.addContact(e)} 
+                      newName={this.state.newName} 
+                      newNumber={this.state.newNumber}
+                      nameOnChange={(e)=> this.handleContactChange(e)}
+                      numberOnChange={(e)=> this.handleNumberChange(e)} />
+       
         <h2>Numerot</h2>
           <table>
             <tbody>
