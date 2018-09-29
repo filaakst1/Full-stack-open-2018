@@ -19,11 +19,18 @@ class App extends React.Component {
     const personObject = {
         name: this.state.newName,
     }
-    const persons = this.state.persons.concat(personObject)
-    this.setState({
-        persons: persons
-      })
-     
+    const searchIndex = this.state.persons.map(person=> person.name).indexOf(personObject.name)
+    if(searchIndex === -1) {
+
+      console.log('New entry')
+      const persons = this.state.persons.concat(personObject)
+      
+      this.setState({
+          persons: persons
+        })
+    }else {
+      console.log(personObject + ' exists at index ' +searchIndex)
+    } 
   }
   /* Event handler for input field changes */
   handleContactChange = (event) => {
