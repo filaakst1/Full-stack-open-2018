@@ -14,8 +14,15 @@ class App extends React.Component {
   /* Event handler for form */
   addContact = (event) => {
     event.preventDefault()
-    console.log('Button clicked')
-    console.log('Button clicked')
+    console.log('Submit button clicked. Value: ' + this.state.newName)
+
+    const personObject = {
+        name: this.state.newName,
+    }
+    const persons = this.state.persons.concat(personObject)
+    this.setState({
+        persons: persons
+      })
      
   }
   /* Event handler for input field changes */
