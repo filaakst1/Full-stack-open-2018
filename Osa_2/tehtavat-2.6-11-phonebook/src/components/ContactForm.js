@@ -1,18 +1,23 @@
 import React from 'react';
 
-
+const FormField = ({label, value, onChange}) => {
+  return (
+    <div>{label}<input value={value} onChange={onChange}/></div>
+  )
+}
+const SubmitButton= () => {
+  return (
+    <div>
+      <button type="submit">lisää</button>
+    </div>
+  )
+}
 const ContactForm = ({ onSubmit,newName,newNumber,nameOnChange,numberOnChange}) => {
     return (
         <form onSubmit={onSubmit}>
-        <div>
-          nimi: <input value={newName} onChange={nameOnChange}/>
-        </div>
-        <div>
-          numero: <input value={newNumber} onChange={numberOnChange}/>
-        </div>
-        <div>
-          <button type="submit">lisää</button>
-        </div>
+          <FormField label='nimi: ' value={newName} onChange={nameOnChange} />
+          <FormField label='numero: ' value={newNumber} onChange={numberOnChange} />
+          <SubmitButton  />
       </form>
     )
 }

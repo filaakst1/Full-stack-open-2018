@@ -1,7 +1,7 @@
 import React from 'react';
 import DataFilter from './components/DataFilter'
 import ContactForm from './components/ContactForm'
-
+import DataTable from './components/DataTable'
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -79,12 +79,7 @@ class App extends React.Component {
                       numberOnChange={(e)=> this.handleNumberChange(e)} />
        
         <h2>Numerot</h2>
-          <table>
-            <tbody>
-              {this.state.persons.filter(person=>this.matchesNameOrNumber(person)).map(person=><tr key={person.name}><td>{person.name}</td><td>{person.number}</td></tr>)}
-            </tbody>
-          </table>
-        
+        <DataTable persons={this.state.persons} matcher={p=> this.matchesNameOrNumber(p)} />
       </div>
     )
   }
