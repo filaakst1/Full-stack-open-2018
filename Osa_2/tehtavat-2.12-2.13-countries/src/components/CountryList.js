@@ -1,7 +1,7 @@
 import React from 'react';
-const CountryListItem = ({country}) => {
+const CountryListItem = ({country,clickHandler}) => {
     return (
-        <li key={country.name}>{country.name}</li>
+        <li onClick={clickHandler}>{country.name}</li>
     )
 }
 const CountyName =({country}) => {
@@ -14,7 +14,7 @@ const CountryPopulation=({country}) => {
     return (<p>population: {country.population}</p>)
 }
 const CountryFlag=({country}) => {
-    return (<p><img width="20%" src={country.flag} /></p>)
+    return (<p><img alt="country flag" width="20%" src={country.flag} /></p>)
 }
 
 const CountryInfo = ({country}) => {
@@ -27,13 +27,13 @@ const CountryInfo = ({country}) => {
         </div>
     )
 }
-const CountryList = ({ countries,matcher}) => {
+const CountryList = ({ countries,matcher,clickHandler}) => {
     const matchResult = countries.filter(matcher)
     console.log(matchResult)
     if(matchResult.length === 1) {
         return (
             <div>
-                {matchResult.map(country=><CountryInfo country={country} />)}
+                {matchResult.map(country=><CountryInfo key={country.name} country={country} />)}
             </div>
         )
     }else if(matchResult.length > 10) {
@@ -49,7 +49,7 @@ const CountryList = ({ countries,matcher}) => {
     return (
         <div>
             <ul>
-                {matchResult.map(country=><CountryListItem country={country} />)}
+                {matchResult.map(country=><CountryListItem key={country.name} country={country} clickHandler={clickHandler}/>)}
             </ul>
         </div>
     )
