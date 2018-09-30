@@ -74,7 +74,17 @@ class App extends React.Component {
   /* On click handler for buttons */
   onButtonClick = (person) => {
       console.log('Button clicked: ' + person.name)
+      const result = window.confirm('poistetaanko ' +person.name )
+      if(result) {
+        const deleteResult = personsService.deletePerson(person)
+        console.log("Delete result: " + deleteResult)
+        const newPersons = this.state.persons.filter(arrayPerson=>arrayPerson.id !== person.id)
+
+        this.setState({ persons: newPersons })
+    
+      }
   }
+
   render() {
     return (
       <div>
