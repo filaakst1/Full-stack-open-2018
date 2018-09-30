@@ -3,6 +3,8 @@ import React from 'react'
 import axios from 'axios'
 
 import CountrySeach from './components/CountrySearch'
+import CountryList from './components/CountryList'
+
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -13,7 +15,10 @@ class App extends React.Component {
   }
 
  
-  
+    /* Simple function for matching name and number fields */
+    countryNameMatcher = (country) => {
+      return this.state.search.length === 0 || country.name.match(new RegExp(this.state.search, 'i'))
+    }
   componentDidMount() {
     console.log('did mount')
     axios
@@ -33,8 +38,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <CountrySeach value={this.state.search} onChangeFunction={(e)=> this.handleFilterChange(e)}/>
-      
+        <CountrySeach value={this.state.search} onChangeFunction={(e)=> this.handleFilterChange(e)} />
+        <CountryList countries={this.state.countries} matcher={(e)=>this.countryNameMatcher(e)} />
       </div>
     )
   }
