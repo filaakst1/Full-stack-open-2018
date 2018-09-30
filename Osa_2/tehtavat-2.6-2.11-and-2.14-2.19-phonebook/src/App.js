@@ -22,17 +22,21 @@ class App extends React.Component {
 
     const personObject = {
         name: this.state.newName,
-        number: this.state.newNumber
+        number: this.state.newNumber 
     }
     const searchIndex = this.state.persons.map(person=> person.name).indexOf(personObject.name)
     if(searchIndex === -1) {
 
-      console.log('New entry')
-      const persons = this.state.persons.concat(personObject)
-      
-      this.setState({
-          persons: persons
+      axios.post('http://localhost:3001/persons', personObject)
+      .then(response => {
+        console.log(response)
+        this.setState({
+          persons: this.state.persons.concat(response.data),
+          newName: '',
+          newNumber: ''
         })
+      })
+
     }else {
       console.log(personObject + ' exists at index ' +searchIndex)
     } 
@@ -69,8 +73,6 @@ class App extends React.Component {
   matchesNameOrNumber = (person) => {
     const nameAndNumber=person.name + ' ' + person.number
     return this.state.filter.length === 0 || nameAndNumber.match(new RegExp(this.state.filter, 'i'))
-
-
   }
 
   render() {
