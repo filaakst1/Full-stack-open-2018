@@ -37,7 +37,18 @@ class App extends React.Component {
         })
       })
     }else {
-      console.log(personObject + ' exists at index ' +searchIndex)
+      const personToUpdate = this.state.persons[searchIndex]
+      const result = window.confirm(personToUpdate.name + ' on jo luettelossa, korvataanko vanha numero uudella?' )
+      if(result) {
+        
+          personsService.updatePerson(personToUpdate.id, personObject).then(response=> {
+            const newPersons = this.state.persons.filter(p => p.id !== personToUpdate.id)
+            this.setState({
+              persons: newPersons.concat(response)
+            })
+          })
+      }
+
     } 
   }
   
@@ -79,7 +90,6 @@ class App extends React.Component {
         const deleteResult = personsService.deletePerson(person)
         console.log("Delete result: " + deleteResult)
         const newPersons = this.state.persons.filter(arrayPerson=>arrayPerson.id !== person.id)
-
         this.setState({ persons: newPersons })
     
       }
