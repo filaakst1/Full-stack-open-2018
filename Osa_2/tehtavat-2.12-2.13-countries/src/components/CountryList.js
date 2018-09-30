@@ -1,14 +1,15 @@
 import React from 'react';
 const CountryListItem = ({country,clickHandler}) => {
     return (
-        <li onClick={clickHandler}>{country.name}</li>
+        <li onClick={()=> clickHandler(country)}>{country.name}</li>
+        
     )
 }
 const CountyName =({country}) => {
     return (<h1>{country.name}</h1>)
 }
 const CountryCapital=({country}) => {
-    return (<p>capital: {country.capital}</p>)
+    return (<p>capital: s{country.capital}</p>)
 }
 const CountryPopulation=({country}) => {
     return (<p>population: {country.population}</p>)
