@@ -1,9 +1,11 @@
 import React from 'react'
-import axios from 'axios'
 
 import DataFilter from './components/DataFilter'
 import ContactForm from './components/ContactForm'
 import DataTable from './components/DataTable'
+
+import personsService from './services/persons'
+
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -26,9 +28,7 @@ class App extends React.Component {
     }
     const searchIndex = this.state.persons.map(person=> person.name).indexOf(personObject.name)
     if(searchIndex === -1) {
-
-      axios.post('http://localhost:3001/persons', personObject)
-      .then(response => {
+      personsService.create(personObject).then(response => {
         console.log(response)
         this.setState({
           persons: this.state.persons.concat(response.data),
@@ -36,7 +36,6 @@ class App extends React.Component {
           newNumber: ''
         })
       })
-
     }else {
       console.log(personObject + ' exists at index ' +searchIndex)
     } 
@@ -44,13 +43,12 @@ class App extends React.Component {
   
   componentDidMount() {
     console.log('did mount')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
+    personsService.getAll().then(response => {
 
-        console.log('promise fulfilled.')
-        this.setState({ persons: response.data })
-      })
+      console.log('promise fulfilled.')
+      this.setState({ persons: response.data })
+    })
+  
   }
 /* Event handler for input field changes */
   handleContactChange = (event) => {
