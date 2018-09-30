@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios'
+
 import DataFilter from './components/DataFilter'
 import ContactForm from './components/ContactForm'
 import DataTable from './components/DataTable'
@@ -6,12 +8,7 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      persons: [
-        { name: 'Arto Hellas', number: '040-1123456' },
-        { name: 'Martti Tienari', number: '040-2123456' },
-        { name: 'Arto Järvinen', number: '040-3123456' },
-        { name: 'Lea Kutvonen', number: '040-4123456' }
-      ],
+      persons: [],
       newName: '',
       newNumber: '',
       filter: ''
@@ -41,6 +38,16 @@ class App extends React.Component {
     } 
   }
   
+  componentDidMount() {
+    console.log('did mount')
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+
+        console.log('promise fulfilled.')
+        this.setState({ persons: response.data })
+      })
+  }
 /* Event handler for input field changes */
   handleContactChange = (event) => {
     console.log('Name change event: ' + event.target.value)
