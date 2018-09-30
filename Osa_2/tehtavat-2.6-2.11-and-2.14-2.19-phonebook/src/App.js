@@ -3,6 +3,7 @@ import React from 'react'
 import DataFilter from './components/DataFilter'
 import ContactForm from './components/ContactForm'
 import DataTable from './components/DataTable'
+import Notification from './components/Notification'
 
 import personsService from './services/persons'
 
@@ -99,6 +100,7 @@ class App extends React.Component {
     return (
       <div>
         <h2>Puhelinluettelo</h2>
+        <Notification message='Hello world' />
         <DataFilter value={this.state.filter} 
                     onChangeFunction={(e)=> this.handleFilterChange(e)} />
         <ContactForm  onSubmit={(e)=> this.addContact(e)} 
