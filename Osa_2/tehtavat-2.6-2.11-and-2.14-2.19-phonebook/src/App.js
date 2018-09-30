@@ -31,7 +31,7 @@ class App extends React.Component {
       personsService.create(personObject).then(response => {
         console.log(response)
         this.setState({
-          persons: this.state.persons.concat(response.data),
+          persons: this.state.persons.concat(response),
           newName: '',
           newNumber: ''
         })
@@ -44,9 +44,8 @@ class App extends React.Component {
   componentDidMount() {
     console.log('did mount')
     personsService.getAll().then(response => {
-
       console.log('promise fulfilled.')
-      this.setState({ persons: response.data })
+      this.setState({ persons: response })
     })
   
   }
