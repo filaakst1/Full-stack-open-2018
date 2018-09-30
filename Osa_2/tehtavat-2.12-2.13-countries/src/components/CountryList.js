@@ -4,13 +4,26 @@ const CountryListItem = ({country}) => {
         <li key={country.name}>{country.name}</li>
     )
 }
+const CountyName =({country}) => {
+    return (<h1>{country.name}</h1>)
+}
+const CountryCapital=({country}) => {
+    return (<p>capital: {country.capital}</p>)
+}
+const CountryPopulation=({country}) => {
+    return (<p>population: {country.population}</p>)
+}
+const CountryFlag=({country}) => {
+    return (<p><img width="20%" src={country.flag} /></p>)
+}
+
 const CountryInfo = ({country}) => {
     return (
         <div>
-            <h1>{country.name}</h1>
-            <div>capiltal: {country.capital}</div>
-            <div>population: {country.population}</div>
-            
+            <CountyName country={country} />
+            <CountryCapital country={country} />
+            <CountryPopulation country={country} />
+            <CountryFlag country={country} />
         </div>
     )
 }
