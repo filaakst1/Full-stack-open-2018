@@ -71,7 +71,10 @@ class App extends React.Component {
     const nameAndNumber=person.name + ' ' + person.number
     return this.state.filter.length === 0 || nameAndNumber.match(new RegExp(this.state.filter, 'i'))
   }
-
+  /* On click handler for buttons */
+  onButtonClick = (person) => {
+      console.log('Button clicked: ' + person.name)
+  }
   render() {
     return (
       <div>
@@ -85,7 +88,7 @@ class App extends React.Component {
                       numberOnChange={(e)=> this.handleNumberChange(e)} />
        
         <h2>Numerot</h2>
-        <DataTable persons={this.state.persons} matcher={p=> this.matchesNameOrNumber(p)} />
+        <DataTable persons={this.state.persons} matcher={p=> this.matchesNameOrNumber(p)} onButtonClick={this.onButtonClick} />
       </div>
     )
   }
