@@ -14,7 +14,8 @@ class App extends React.Component {
       persons: [],
       newName: '',
       newNumber: '',
-      filter: ''
+      filter: '',
+      message: null
     }
   }
 
@@ -34,8 +35,10 @@ class App extends React.Component {
         this.setState({
           persons: this.state.persons.concat(response),
           newName: '',
-          newNumber: ''
+          newNumber: '',
+          message: 'lisattiin ' + response.name
         })
+        setTimeout(() => {this.setState({message: null})}, 5000)
       })
     }else {
       const personToUpdate = this.state.persons[searchIndex]
@@ -45,8 +48,10 @@ class App extends React.Component {
           personsService.updatePerson(personToUpdate.id, personObject).then(response=> {
             const newPersons = this.state.persons.filter(p => p.id !== personToUpdate.id)
             this.setState({
-              persons: newPersons.concat(response)
+              persons: newPersons.concat(response),
+              message: 'muutettiin ' + personToUpdate.name + ' tietoja'
             })
+            setTimeout(() => {this.setState({message: null})}, 5000)
           })
       }
 
@@ -76,6 +81,7 @@ class App extends React.Component {
   handleFilterChange = (event) => {
     console.log('Filter change event: '+  event.target.value)
     this.setState({filter: event.target.value})
+   
   }
 
   /* Simple function for matching name and number fields */
@@ -91,16 +97,19 @@ class App extends React.Component {
         const deleteResult = personsService.deletePerson(person)
         console.log("Delete result: " + deleteResult)
         const newPersons = this.state.persons.filter(arrayPerson=>arrayPerson.id !== person.id)
-        this.setState({ persons: newPersons })
-    
-      }
+        this.setState({ 
+          persons: newPersons,
+          message: 'poistettiin ' + person.name
+        })
+        setTimeout(() => {this.setState({message: null})}, 5000)
+      } 
   }
 
   render() {
     return (
       <div>
         <h2>Puhelinluettelo</h2>
-        <Notification message='Hello world' />
+        <Notification message={this.state.message} />
         <DataFilter value={this.state.filter} 
                     onChangeFunction={(e)=> this.handleFilterChange(e)} />
         <ContactForm  onSubmit={(e)=> this.addContact(e)} 
