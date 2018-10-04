@@ -30,41 +30,72 @@ class App extends React.Component {
     }
     const searchIndex = this.state.persons.map(person=> person.name).indexOf(personObject.name)
     if(searchIndex === -1) {
-      personsService.create(personObject).then(response => {
-        console.log(response)
-        this.setState({
-          persons: this.state.persons.concat(response),
-          newName: '',
-          newNumber: '',
-          message: 'lisattiin ' + response.name
-        })
-        setTimeout(() => {this.setState({message: null})}, 5000)
-      })
+      this.createNewPerson(personObject)
     }else {
-      const personToUpdate = this.state.persons[searchIndex]
-      const result = window.confirm(personToUpdate.name + ' on jo luettelossa, korvataanko vanha numero uudella?' )
-      if(result) {
-        
-          personsService.updatePerson(personToUpdate.id, personObject).then(response=> {
-            const newPersons = this.state.persons.filter(p => p.id !== personToUpdate.id)
-            this.setState({
-              persons: newPersons.concat(response),
-              message: 'muutettiin ' + personToUpdate.name + ' tietoja'
-            })
-            setTimeout(() => {this.setState({message: null})}, 5000)
-          })
-      }
-
+      this.updateExistingPerson(personObject, searchIndex)
     } 
   }
-  
-  componentDidMount() {
-    console.log('did mount')
+
+  loadAllPersons() {
     personsService.getAll().then(response => {
       console.log('promise fulfilled.')
       this.setState({ persons: response })
+    }).catch(error => {
+      console.error(error)
+      alert('tietojen lataaminen serverilta epaonnistui')
     })
-  
+  }
+  createNewPerson(personObject){
+    personsService.create(personObject).then(response => {
+      console.log(response)
+      this.setState({
+        persons: this.state.persons.concat(response),
+        newName: '',
+        newNumber: '',
+        message: 'lisattiin ' + response.name
+      })
+      setTimeout(() => {this.setState({message: null})}, 5000)
+    }).catch(error => {
+      console.error(error)
+      // Display alert popup
+      alert(`henkilon '${personObject.name}' lisaaminen epaonnistui`)
+      // Reload all from server
+      this.loadAllPersons()
+    })
+  }
+
+ 
+  updateExistingPerson(personObject, searchIndex) {
+    const personToUpdate = this.state.persons[searchIndex]
+    const result = window.confirm(`${personToUpdate.name} on jo luettelossa, korvataanko vanha numero uudella?` )
+    if(result) {
+        personsService.updatePerson(personToUpdate.id, personObject).then(response=> {
+          const newPersons = this.state.persons.filter(p => p.id !== personToUpdate.id)
+          this.setState({
+            persons: newPersons.concat(response),
+            message: 'muutettiin ' + personToUpdate.name + ' tietoja'
+          })
+          setTimeout(() => {this.setState({message: null})}, 5000)
+        }).catch(error => {
+          console.error(error)
+          const result2 = window.confirm(`henkilo '${personToUpdate.name}' on jo valitettavasti poistettu palvelimelta. Lisataanko uudelleen?`)
+          // Refresh the state of persons before doing anything
+          const newPersons =this.state.persons.filter(p => p.id !== personToUpdate.id)
+          this.setState({
+            persons: newPersons
+          })
+          if(result2) {
+            this.createNewPerson(personObject)
+          }
+        })
+
+    }
+  }
+ 
+  /* Method to call after mount  */
+  componentDidMount() {
+    console.log('did mount')
+    this.loadAllPersons()
   }
 /* Event handler for input field changes */
   handleContactChange = (event) => {
@@ -95,7 +126,11 @@ class App extends React.Component {
       const result = window.confirm('poistetaanko ' +person.name )
       if(result) {
         const deleteResult = personsService.deletePerson(person)
-        console.log("Delete result: " + deleteResult)
+          .catch(error => {
+            console.error(error)
+            window.alert(`henkilo '${person.name}' on jo poistettu palvelimelta`)
+          })
+          console.log(`Delete result: ${deleteResult}`)
         const newPersons = this.state.persons.filter(arrayPerson=>arrayPerson.id !== person.id)
         this.setState({ 
           persons: newPersons,
